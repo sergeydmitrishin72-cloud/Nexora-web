@@ -1,1 +1,286 @@
 
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXORA — Fuška в Чехії</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #17233b;
+    }
+    header {
+      background: #101d35;
+      color: white;
+      padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .logo span { color: #37d6a0; }
+    nav { display: flex; gap: 15px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; }
+    .hero {
+      background: linear-gradient(135deg,#142b50,#245c85);
+      color: white;
+      padding: 75px 6%;
+      text-align: center;
+    }
+    h1 { font-size: clamp(30px,5vw,48px); }
+    .hero p { font-size: 19px; }
+    .search {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 850px;
+      margin: 30px auto 0;
+    }
+    input, select, button {
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #d7dfeb;
+      font-size: 15px;
+    }
+    .search input, .search select {
+      flex: 1 1 180px;
+      min-width: 0;
+    }
+    button {
+      background: #24bc87;
+      color: #071e20;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #48dca8; }
+    main { max-width: 1100px; margin: auto; padding: 35px 20px; }
+    h2 { margin-top: 15px; }
+    .jobs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 20px;
+    }
+    .job, .panel {
+      background: white;
+      border-radius: 15px;
+      padding: 24px;
+      box-shadow: 0 4px 18px #142b5010;
+    }
+    .job h3 { margin-top: 0; }
+    .pay { color: #087d58; font-size: 23px; font-weight: bold; }
+    .tag {
+      display: inline-block;
+      background: #e4f7ef;
+      color: #087d58;
+      border-radius: 20px;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+    .job button { width: 100%; margin-top: 15px; }
+    .panel { margin-top: 30px; }
+    .panel input, .panel select {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+    }
+    .panel button { margin-top: 8px; }
+    .notice { color: #65718a; font-size: 14px; }
+    footer {
+      background: #101d35;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEX<span>ORA</span></div>
+  <nav>
+    <a href="#vacancies">Вакансії</a>
+    <a href="#workers">Працівникам</a>
+    <a href="#employers">Роботодавцям</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Знайди Fuška в Чехії</h1>
+  <p>Одноденна робота. Гнучкий графік. Зручний пошук.</p>
+  <div class="search">
+    <input id="city" placeholder="Місто: Praha, Kladno...">
+    <select id="category">
+      <option value="">Усі види роботи</option>
+      <option value="Склад">Склад</option>
+      <option value="Будівництво">Будівництво</option>
+      <option value="Прибирання">Прибирання</option>
+      <option value="Виробництво">Виробництво</option>
+    </select>
+    <button onclick="filterJobs()">Знайти роботу</button>
+  </div>
+</section>
+
+<main>
+  <section id="vacancies">
+    <h2>Доступні Fuška</h2>
+    <p class="notice">Демонстраційні вакансії для перевірки сайту.</p>
+    <div class="jobs" id="jobList"></div>
+    <p id="empty" hidden>За цим пошуком вакансій немає.</p>
+  </section>
+
+  <section class="panel" id="workers">
+    <h2>Реєстрація працівника</h2>
+    <p>Для відгуку на роботу потрібна реєстрація.</p>
+    <form id="workerForm">
+      <input id="workerName" placeholder="Ім'я та прізвище" required>
+      <input id="workerAge" type="number" min="18" max="100"
+        placeholder="Вік (18+)" required>
+      <input id="workerPhone" type="tel"
+        placeholder="Телефон +420..." required>
+      <button type="submit">Продовжити</button>
+    </form>
+    <p class="notice">
+      Демоверсія: дані не зберігаються.
+      SMS-підтвердження ще не підключено.
+    </p>
+  </section>
+
+  <section class="panel" id="employers">
+    <h2>Для роботодавців</h2>
+    <p>Розміщуйте короткострокові вакансії та обирайте працівників.</p>
+    <button onclick="alert('Кабінет роботодавця додамо наступним етапом.')">
+      Розмістити вакансію
+    </button>
+    <p class="notice">
+      У повній версії кожен відгук потребуватиме
+      окремого підтвердження роботодавця.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <strong>NEXORA</strong>
+  <p>Fuška — робота в Чехії</p>
+  <small>Демонстраційна версія</small>
+</footer>
+
+<script>
+  const jobs = [
+    {
+      id: 1,
+      title: "Допомога на складі",
+      city: "Kladno",
+      category: "Склад",
+      pay: "200 Kč/год",
+      shift: "08:00–16:00"
+    },
+    {
+      id: 2,
+      title: "Помічник на будівництві",
+      city: "Praha",
+      category: "Будівництво",
+      pay: "230 Kč/год",
+      shift: "07:00–17:00"
+    },
+    {
+      id: 3,
+      title: "Прибирання офісу",
+      city: "Praha",
+      category: "Прибирання",
+      pay: "190 Kč/год",
+      shift: "09:00–15:00"
+    },
+    {
+      id: 4,
+      title: "Пакування продукції",
+      city: "Slaný",
+      category: "Виробництво",
+      pay: "210 Kč/год",
+      shift: "06:00–14:00"
+    }
+  ];
+
+  function renderJobs(items) {
+    const list = document.getElementById("jobList");
+    list.replaceChildren();
+
+    items.forEach(job => {
+      const card = document.createElement("article");
+      card.className = "job";
+
+      const title = document.createElement("h3");
+      title.textContent = job.title;
+
+      const location = document.createElement("p");
+      location.textContent = "📍 " + job.city;
+
+      const shift = document.createElement("p");
+      shift.textContent = "🕒 " + job.shift;
+
+      const pay = document.createElement("p");
+      pay.className = "pay";
+      pay.textContent = job.pay;
+
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = job.category;
+
+      const button = document.createElement("button");
+      button.textContent = "Відгукнутися";
+      button.addEventListener("click", () => {
+        document.getElementById("workers").scrollIntoView({
+          behavior: "smooth"
+        });
+        alert("Для відгуку спочатку потрібна реєстрація.");
+      });
+
+      card.append(title, location, shift, pay, tag, button);
+      list.appendChild(card);
+    });
+
+    document.getElementById("empty").hidden = items.length > 0;
+  }
+
+  function filterJobs() {
+    const city = document.getElementById("city")
+      .value.trim().toLocaleLowerCase();
+    const category = document.getElementById("category").value;
+
+    const filtered = jobs.filter(job =>
+      job.city.toLocaleLowerCase().includes(city) &&
+      (!category || job.category === category)
+    );
+
+    renderJobs(filtered);
+    document.getElementById("vacancies").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
+  document.getElementById("workerForm")
+    .addEventListener("submit", event => {
+      event.preventDefault();
+      alert(
+        "Це демонстрація форми. " +
+        "Реєстрація та SMS-підтвердження ще не працюють."
+      );
+    });
+
+  renderJobs(jobs);
+</script>
+</body>
+</html>
